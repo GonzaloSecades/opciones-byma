@@ -1,0 +1,28 @@
+{
+  "underlying": "GGAL",
+  "date": "2026-06-05",
+  "spot": 5000,
+  "rate": 0.35,
+  "contracts": [
+    { "ticker": "GFGC4400JU", "underlying": "GGAL", "optionType": "call", "strike": 4400, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGC4700JU", "underlying": "GGAL", "optionType": "call", "strike": 4700, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGC5000JU", "underlying": "GGAL", "optionType": "call", "strike": 5000, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGC5300JU", "underlying": "GGAL", "optionType": "call", "strike": 5300, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGC5600JU", "underlying": "GGAL", "optionType": "call", "strike": 5600, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGV4700JU", "underlying": "GGAL", "optionType": "put", "strike": 4700, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGV5000JU", "underlying": "GGAL", "optionType": "put", "strike": 5000, "expiration": "2026-06-19", "monthCode": "JU", "lotSize": 100 },
+    { "ticker": "GFGC5000AG", "underlying": "GGAL", "optionType": "call", "strike": 5000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize": 100 },
+    { "ticker": "GFGC5600AG", "underlying": "GGAL", "optionType": "call", "strike": 5600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize": 100 }
+  ],
+  "quotes": [
+    { "ticker": "GFGC4400JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 620, "ask": 660, "last": 640, "volume": 120, "openInterest": 850 },
+    { "ticker": "GFGC4700JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 380, "ask": 405, "last": 395, "volume": 540, "openInterest": 2300 },
+    { "ticker": "GFGC5000JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 195, "ask": 215, "last": 205, "volume": 980, "openInterest": 4100 },
+    { "ticker": "GFGC5300JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 85, "ask": 99, "last": 92, "volume": 760, "openInterest": 3500 },
+    { "ticker": "GFGC5600JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 30, "ask": 42, "last": 36, "volume": 410, "openInterest": 1900 },
+    { "ticker": "GFGV4700JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 55, "ask": 70, "last": 62, "volume": 95, "openInterest": 700 },
+    { "ticker": "GFGV5000JU", "ts": "2026-06-05T16:55:00-03:00", "bid": 150, "ask": 175, "last": 160, "volume": 130, "openInterest": 900 },
+    { "ticker": "GFGC5000AG", "ts": "2026-06-05T16:55:00-03:00", "bid": 410, "ask": 445, "last": 425, "volume": 210, "openInterest": 1200 },
+    { "ticker": "GFGC5600AG", "ts": "2026-06-05T16:55:00-03:00", "bid": 175, "ask": 205, "last": 190, "volume": 140, "openInterest": 800 }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:drive.google.com)",
+      "WebFetch(domain:t.co)",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:bolsaargentinayestrategias.blogspot.com.ar)",
+      "Skill(deep-research)",
+      "WebFetch(domain:bolsaargentinayestrategias.blogspot.com)",
+      "WebSearch",
+      "WebFetch(domain:www.tapatalk.com)",
+      "WebFetch(domain:www.scribd.com)",
+      "WebFetch(domain:iol.invertironline.com)",
+      "WebFetch(domain:www.youtube.com)",
+      "WebFetch(domain:x.com)",
+      "WebFetch(domain:trendsmap.com)",
+      "WebFetch(domain:nitter.domain.glass)",
+      "WebFetch(domain:twicopy.com)",
+      "WebFetch(domain:www.sinelefantesblancos.com.ar)",
+      "WebFetch(domain:quicktrade.com.ar)",
+      "WebFetch(domain:apuntesderama.blogspot.com)",
+      "WebFetch(domain:data912.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.rava.com)",
+      "WebFetch(domain:data-widgets.byma.com.ar)",
+      "WebFetch(domain:es.scribd.com)",
+      "WebFetch(domain:www.puentenet.com)",
+      "WebFetch(domain:workspace.google.com)",
+      "WebFetch(domain:argentinabursatil.com)"
+    ]
+  }
+}

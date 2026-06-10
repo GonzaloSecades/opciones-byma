@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de uso — Opciones BYMA</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #1e293b; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8; --green: #4ade80;
+    --amber: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.65;
+  }
+  .container { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+  header h1 { font-size: 2.2rem; letter-spacing: -0.02em; }
+  header p.sub { color: var(--muted); margin-top: 8px; font-size: 1.05rem; }
+  h2 {
+    margin: 48px 0 16px; font-size: 1.4rem; color: var(--accent);
+    border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
+  h3 { margin: 24px 0 8px; font-size: 1.05rem; }
+  p { margin: 8px 0; }
+  .muted { color: var(--muted); }
+  code {
+    background: var(--panel); border: 1px solid var(--border);
+    padding: 2px 6px; border-radius: 6px; font-size: 0.9em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--border);
+    padding: 16px; border-radius: 10px; overflow-x: auto; margin: 12px 0;
+    font-size: 0.9em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  pre code { background: none; border: none; padding: 0; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 22px; margin: 14px 0;
+  }
+  .card h3 { margin-top: 0; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    padding: 2px 10px; border-radius: 999px; margin-left: 8px; vertical-align: 2px;
+  }
+  .badge.done { background: rgba(74,222,128,.15); color: var(--green); border: 1px solid rgba(74,222,128,.4); }
+  .badge.next { background: rgba(56,189,248,.15); color: var(--accent); border: 1px solid rgba(56,189,248,.4); }
+  .badge.later { background: rgba(148,163,184,.12); color: var(--muted); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95em; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.04em; }
+  ul, ol { margin: 8px 0 8px 22px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .warn {
+    border-left: 4px solid var(--amber); background: rgba(251,191,36,.08);
+    padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 16px 0;
+  }
+  .ticker { font-family: ui-monospace, Menlo, monospace; letter-spacing: 0.05em; }
+  .ticker span { padding: 2px 4px; border-radius: 4px; }
+  .t1 { background: rgba(56,189,248,.2); } .t2 { background: rgba(74,222,128,.2); }
+  .t3 { background: rgba(251,191,36,.2); } .t4 { background: rgba(244,114,182,.2); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>📈 Opciones BYMA — Guía de uso</h1>
+  <p class="sub">Programa paso a paso para aprender opciones del mercado argentino: wiki de estudio + simulador interactivo + backtesting, con un companion de IA al lado.</p>
+</header>
+
+<h2>1 · Qué es este proyecto</h2>
+<p>Un monorepo con dos piezas que se retroalimentan:</p>
+<div class="card">
+  <h3>📚 La wiki (<code>content/wiki/</code> → <code>/aprender</code>)</h3>
+  <p>El programa de estudio en español, en módulos ordenados. Cada lección tiene teoría, ejemplos del mercado argentino, <strong>ejercicios</strong> y <strong>fuentes</strong>. Los archivos son markdown plano: también podés abrir <code>content/</code> como bóveda de Obsidian.</p>
+</div>
+<div class="card">
+  <h3>🧮 El simulador (<code>/simulador</code>)</h3>
+  <p>Armás posiciones con calls, puts y acciones, y ves el diagrama de payoff, breakevens, ganancia/pérdida máxima y griegas. Primero con datos manuales e históricos; más adelante, conexión en vivo con un broker.</p>
+</div>
+
+<h2>2 · Cómo arrancar</h2>
+<pre><code># requisitos: Node ≥ 20 y pnpm (npm install -g pnpm)
+cd ~/Projects/opciones-byma
+pnpm install
+pnpm dev          # abre http://localhost:3000
+pnpm test         # corre los tests del motor de cálculo</code></pre>
+<p class="muted">La app levanta con la wiki ya navegable. El botón "Empezar por la primera lección" te lleva al módulo 00.</p>
+
+<h2>3 · El programa de aprendizaje</h2>
+<table>
+  <tr><th>Módulo</th><th>Contenido</th><th>Estado</th></tr>
+  <tr><td><strong>00 · Fundamentos</strong></td><td>Qué es una opción · calls y puts · la prima e ITM/ATM/OTM · cómo leer GFGC4700JU</td><td><span class="badge done">LISTO</span></td></tr>
+  <tr><td><strong>01 · Mercado argentino</strong></td><td>Nomenclatura en detalle, lotes, vencimientos, liquidez, horarios, garantías</td><td><span class="badge next">M1</span></td></tr>
+  <tr><td><strong>02 · Valuación y griegas</strong></td><td>Valor intrínseco/extrínseco, Black-Scholes, delta · gamma · theta · vega, volatilidad implícita</td><td><span class="badge next">M1</span></td></tr>
+  <tr><td><strong>03 · Estrategias</strong></td><td>Lanzamiento cubierto, spreads, straddles, collars — cada una con su payoff en el simulador</td><td><span class="badge later">M2</span></td></tr>
+  <tr><td><strong>04 · Gestión de riesgo</strong></td><td>Position sizing, ejercicio y asignación, garantías</td><td><span class="badge later">M2</span></td></tr>
+  <tr><td><strong>05 · Operatoria práctica</strong></td><td>Brokers, comisiones, impuestos, ejecución real</td><td><span class="badge later">M2</span></td></tr>
+</table>
+<p><strong>Método sugerido:</strong> una lección por vez, hacé los ejercicios a mano, y después verificá tus números en el simulador. No avances de módulo sin poder explicar el anterior con tus palabras.</p>
+
+<h2>4 · Mini chuleta: leer un ticker</h2>
+<p class="ticker" style="font-size:1.5rem; text-align:center; margin:16px 0;">
+  <span class="t1">GFG</span><span class="t2">C</span><span class="t3">4700</span><span class="t4">JU</span>
+</p>
+<table>
+  <tr><td><span class="ticker"><span class="t1">GFG</span></span></td><td>Subyacente: GGAL (el prefijo no es el ticker de la acción)</td></tr>
+  <tr><td><span class="ticker"><span class="t2">C</span></span></td><td><strong>C</strong> = call · <strong>V</strong> = put ("venta")</td></tr>
+  <tr><td><span class="ticker"><span class="t3">4700</span></span></td><td>La base (precio de ejercicio)</td></tr>
+  <tr><td><span class="ticker"><span class="t4">JU</span></span></td><td>Vencimiento: junio, 3er viernes. Ciclo bimestral: FE·AB·JU·AG·OC·DI</td></tr>
+</table>
+<p class="muted">Lote = 100 acciones. La prima cotiza por acción: 1 lote a prima $205 = $20.500.</p>
+
+<h2>5 · El companion de IA</h2>
+<p>El repo incluye un <code>CLAUDE.md</code> con todo el contexto del dominio (glosario argentino, estructura, convenciones). Abrí una sesión de <strong>Claude Code</strong> dentro del proyecto y usalo como tutor:</p>
+<ul>
+  <li><em>"Explicame el ejercicio 3 de la lección de la prima, no me sale."</em></li>
+  <li><em>"Calculá con packages/core el delta de un call GGAL base 5300 a 14 días con IV 55%."</em></li>
+  <li><em>"¿Por qué mi lanzamiento cubierto tiene este breakeven? Verificalo."</em></li>
+</ul>
+<p class="muted">Más adelante (fase M4) el simulador suma un panel de chat integrado que ve tu posición actual.</p>
+
+<h2>6 · Roadmap de fases</h2>
+<table>
+  <tr><th>Hito</th><th>Qué trae</th><th>Estado</th></tr>
+  <tr><td><strong>M0</strong></td><td>Scaffold, wiki módulo 00, motor de cálculo testeado, esta guía</td><td><span class="badge done">LISTO</span></td></tr>
+  <tr><td><strong>M1</strong></td><td>Simulador de payoff completo (sliders de escenario, plantillas de estrategias, links desde la wiki)</td><td><span class="badge next">SIGUIENTE</span></td></tr>
+  <tr><td><strong>M2</strong></td><td>Cadenas históricas reales: browser de bases, script de snapshots diarios (data912 / API IOL)</td><td><span class="badge later">DESPUÉS</span></td></tr>
+  <tr><td><strong>M3</strong></td><td>Backtesting: replay día a día, métricas de P&L, drawdown, win rate</td><td><span class="badge later">DESPUÉS</span></td></tr>
+  <tr><td><strong>M4</strong></td><td>Datos en tiempo real vía API de broker + chat de IA integrado en la app</td><td><span class="badge later">FUTURO</span></td></tr>
+</table>
+
+<div class="warn">
+  <strong>⚠️ Descargo:</strong> todo el material es educativo y el simulador es para practicar sin plata real. Nada de esto constituye recomendación de inversión. Las opciones son instrumentos apalancados: antes de operar en serio, dominá la gestión de riesgo (módulo 04) y empezá con posiciones chicas y riesgo acotado.
+</div>
+
+</div>
+</body>
+</html>

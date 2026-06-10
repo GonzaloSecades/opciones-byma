@@ -1,0 +1,16 @@
+{
+  "name": "opciones-byma",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Programa de aprendizaje y simulador de opciones financieras del mercado argentino (BYMA)",
+  "scripts": {
+    "dev": "pnpm --filter @opciones/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}
