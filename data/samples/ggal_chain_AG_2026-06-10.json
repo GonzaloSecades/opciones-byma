@@ -1,0 +1,264 @@
+{
+    "underlying": "GGAL",
+    "date": "2026-06-10",
+    "spot": 7510,
+    "rate": 0.199,
+    "contracts": [
+      { "ticker": "GFGV4200AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 4200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC4200AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 4200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV4400AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 4400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC4400AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 4400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV4600AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 4600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC4600AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 4600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV4800AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 4800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC4800AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 4800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV5000AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 5000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC5000AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 5000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC5200AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 5200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV5200AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 5200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC5400AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 5400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV5400AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 5400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV5600AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 5600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC5600AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 5600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV5800AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 5800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC5800AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 5800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC6000AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 6000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV6000AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 6000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV6200AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 6200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC6200AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 6200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC6400AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 6400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV6400AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 6400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC6600AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 6600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV6600AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 6600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC6800AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 6800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV6800AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 6800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV7000AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 7000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC7000AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 7000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV7200AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 7200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC7200AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 7200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC7400AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 7400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV7400AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 7400, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV7600AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 7600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC7600AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 7600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV7800AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 7800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC7800AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 7800, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC8000AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 8000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV8000AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 8000, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV8300AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 8300, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC8300AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 8300, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC8600AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 8600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV8600AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 8600, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC8900AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 8900, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV8900AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 8900, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGV9200AG", "underlying": "GGAL", "optionType": "put",
+      "strike": 9200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 },
+      { "ticker": "GFGC9200AG", "underlying": "GGAL", "optionType": "call",
+      "strike": 9200, "expiration": "2026-08-21", "monthCode": "AG", "lotSize":
+      100 }
+    ],
+    "quotes": [
+      { "ticker": "GFGV4200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC4200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 3564.89, "last": 3458.22, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV4400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC4400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 3373.308, "last": 3260.81, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV4600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC4600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 3181.795, "last": 3143.61, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV4800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      5, "ask": null, "last": 12, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC4800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 2990.776, "last": 2875.97, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV5000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC5000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 2801.94, "last": 2547.17, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGC5200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 2614.49, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV5200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": 15.753, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC5400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 2429.89, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV5400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 58, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV5600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      5, "ask": 64.99, "last": 153, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC5600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": 2248.89, "last": 1903.388, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV5800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      21.58, "ask": 26.9, "last": 21.58, "volume": 28, "openInterest": null },
+      { "ticker": "GFGC5800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1896.26, "ask": 1971.96, "last": 2000.48, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGC6000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1703.74, "ask": 1853.2, "last": 1641.01, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV6000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      34, "ask": 38, "last": 34, "volume": 32, "openInterest": null },
+      { "ticker": "GFGV6200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      45, "ask": 58, "last": 50, "volume": 15, "openInterest": null },
+      { "ticker": "GFGC6200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1100, "ask": null, "last": 1587.2, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC6400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1260.01, "ask": 1495, "last": 1435, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV6400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      60, "ask": 70, "last": 70, "volume": 37, "openInterest": null },
+      { "ticker": "GFGC6600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1103.469, "ask": 1290, "last": 1290, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV6600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      93, "ask": 108.97, "last": 108.99, "volume": 42, "openInterest": null },
+      { "ticker": "GFGC6800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      1013.918, "ask": 1190.414, "last": 1080, "volume": 0, "openInterest":
+      null },
+      { "ticker": "GFGV6800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      136.01, "ask": 149.99, "last": 140, "volume": 136, "openInterest": null },
+      { "ticker": "GFGV7000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      176.02, "ask": 210.39, "last": 166.96, "volume": 15, "openInterest":
+      null },
+      { "ticker": "GFGC7000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      815.03, "ask": 999, "last": 950, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV7200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      243.101, "ask": 260, "last": 243.101, "volume": 15, "openInterest":
+      null },
+      { "ticker": "GFGC7200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      770.01, "ask": 829.99, "last": 766.14, "volume": 62, "openInterest":
+      null },
+      { "ticker": "GFGC7400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      670, "ask": 699.401, "last": 672, "volume": 247, "openInterest": null },
+      { "ticker": "GFGV7400AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      298.461, "ask": 338, "last": 340, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV7600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      368.709, "ask": 424.015, "last": 421, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC7600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      550.02, "ask": 580.919, "last": 579.999, "volume": 111, "openInterest":
+      null },
+      { "ticker": "GFGV7800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      497.453, "ask": 625, "last": 540, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC7800AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      461, "ask": 487.989, "last": 470, "volume": 427, "openInterest": null },
+      { "ticker": "GFGC8000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      361.11, "ask": 390, "last": 392.876, "volume": 338, "openInterest":
+      null },
+      { "ticker": "GFGV8000AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      520, "ask": null, "last": 870, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV8300AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC8300AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      270, "ask": 272, "last": 272, "volume": 464, "openInterest": null },
+      { "ticker": "GFGC8600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      174.84, "ask": 190, "last": 190, "volume": 417, "openInterest": null },
+      { "ticker": "GFGV8600AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": 1200, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC8900AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      125, "ask": 144, "last": 131, "volume": 48, "openInterest": null },
+      { "ticker": "GFGV8900AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGV9200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      null, "ask": null, "last": null, "volume": 0, "openInterest": null },
+      { "ticker": "GFGC9200AG", "ts": "2026-06-10T13:15:23.682729-03:00", "bid":
+      89, "ask": 94, "last": 88.05, "volume": 539, "openInterest": null }
+    ]
+  }
