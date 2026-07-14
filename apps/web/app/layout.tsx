@@ -25,11 +25,17 @@ export default function RootLayout({
               <Link href="/aprender" className="hover:text-slate-900">
                 Aprender
               </Link>
+              <Link href="/cadena" className="hover:text-slate-900">
+                Cadena
+              </Link>
               <Link href="/simulador" className="hover:text-slate-900">
                 Simulador
               </Link>
               <Link href="/backtest" className="hover:text-slate-900">
                 Backtest
+              </Link>
+              <Link href="/monitor" className="hover:text-slate-900 text-slate-400">
+                Monitor
               </Link>
             </div>
           </nav>

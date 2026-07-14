@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "paths": {
+      "@opciones/data": ["../packages/data/src/index.ts"],
+      "@opciones/core": ["../packages/core/src/index.ts"]
+    }
+  },
+  "include": ["./**/*.ts"],
+  "references": [
+    { "path": "../packages/data" },
+    { "path": "../packages/core" }
+  ]
+}

@@ -47,15 +47,29 @@ export const PREFIX_TO_UNDERLYING: Record<string, string> = {
 
 const TICKER_RE = /^([A-Z]{3})([CV])(\d+(?:\.\d+)?)([A-Z]{1,2}[A-Z0-9]?)$/;
 
+/** Normaliza sufijos de 1 letra a su equivalente de 2 letras. */
+const SINGLE_TO_DOUBLE: Record<string, string> = {
+  F: "FE", A: "AB", J: "JU", G: "AG", O: "OC", D: "DI",
+};
+
 export function parseTicker(raw: string): ParsedTicker | null {
   const ticker = raw.trim().toUpperCase();
   const m = TICKER_RE.exec(ticker);
   if (!m) return null;
-  const [, prefix, cv, strikeStr, monthCode] = m;
+  const [, prefix, cv, strikeStr, rawMonthCode] = m;
   const underlying = PREFIX_TO_UNDERLYING[prefix];
   if (!underlying) return null;
-  const strike = Number(strikeStr);
+
+  let strike = Number(strikeStr);
   if (!Number.isFinite(strike) || strike <= 0) return null;
+
+  // Sufijos de 1 letra (J, G, A, etc.): BYMA codifica el strike como entero×10.
+  // Ej: GFGC74307J → strike real 7430.7. Los de 2 letras son enteros directos.
+  const monthCode = SINGLE_TO_DOUBLE[rawMonthCode] ?? rawMonthCode;
+  if (rawMonthCode.length === 1) {
+    strike = strike / 10;
+  }
+
   return {
     ticker,
     underlying,

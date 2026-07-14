@@ -7,10 +7,17 @@
     "dev": "pnpm --filter @opciones/web dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "snapshot": "tsx scripts/snapshot.ts",
+    "snapshot:dry": "tsx scripts/snapshot.ts --dry-run"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.22.4"
   }
 }

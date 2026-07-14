@@ -16,8 +16,10 @@ pnpm build          # build de todos los paquetes
 - `content/wiki/` — lecciones en markdown (frontmatter: `titulo, modulo, orden, descripcion, fuentes`). Compatible con Obsidian. Renderizadas en `/aprender`.
 - `packages/core` — matemática pura, CERO dependencias: Black-Scholes + griegas (`blackScholes.ts`), IV por bisección, payoffs multi-pata, breakevens, plantillas de estrategias (`strategies.ts`). Tests con valores dorados.
 - `packages/data` — schemas zod (`schema.ts`), parser de tickers BYMA (`tickerParser.ts`), interfaz `DataProvider` (clave: toda la app habla con esta interfaz; fase A = archivos estáticos, fase C = broker en vivo).
-- `apps/web` — Next.js App Router. `/aprender` (wiki), `/simulador` (M1), `/backtest` (M3).
+- `apps/web` — Next.js App Router. `/aprender` (wiki), `/cadena` (browser de cadenas M2), `/simulador` (M1), `/backtest` (M3).
 - `data/samples/` — snapshots de ejemplo commiteados. `data/snapshots/` — historia real acumulada (gitignored).
+- `scripts/IOL_API.md` — referencia de la API REST de IOL (auth, endpoints, flujo de tokens). Leer antes de tocar el snapshot script.
+- `.env.example` — variables de entorno necesarias (IOL credentials, Supabase, config).
 
 ## Dominio: glosario argentino
 

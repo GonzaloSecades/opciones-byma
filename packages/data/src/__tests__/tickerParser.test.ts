@@ -41,6 +41,25 @@ describe("parseTicker", () => {
   it("normaliza minúsculas y espacios", () => {
     expect(parseTicker(" gfgc4700ju ")?.ticker).toBe("GFGC4700JU");
   });
+
+  it("sufijo 1 letra J: strike ÷10 y monthCode normalizado a JU", () => {
+    const p = parseTicker("GFGC74307J");
+    expect(p?.strike).toBeCloseTo(7430.7);
+    expect(p?.monthCode).toBe("JU");
+    expect(p?.ticker).toBe("GFGC74307J"); // ticker original sin cambios
+  });
+
+  it("sufijo 1 letra J: put OTM con strike fraccionario", () => {
+    const p = parseTicker("GFGV42553J");
+    expect(p?.strike).toBeCloseTo(4255.3);
+    expect(p?.monthCode).toBe("JU");
+    expect(p?.optionType).toBe("put");
+  });
+
+  it("sufijo 1 letra G normaliza a AG", () => {
+    expect(parseTicker("GFGC76000G")?.monthCode).toBe("AG");
+    expect(parseTicker("GFGC76000G")?.strike).toBeCloseTo(7600);
+  });
 });
 
 describe("thirdFriday", () => {

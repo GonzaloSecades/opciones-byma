@@ -1,0 +1,39 @@
+name: Snapshot cadena GGAL
+
+on:
+  schedule:
+    # Cada 30 min, lunes a viernes, 10:00–17:00 ARG (UTC-3 = 13:00–20:00 UTC)
+    # El cron de GitHub Actions corre en UTC.
+    - cron: "0,30 13-20 * * 1-5"
+  workflow_dispatch: # permite lanzar manualmente desde la UI de GitHub
+
+jobs:
+  snapshot:
+    name: Capturar opciones
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Capturar snapshot
+        env:
+          IOL_USERNAME: ${{ secrets.IOL_USERNAME }}
+          IOL_PASSWORD: ${{ secrets.IOL_PASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SNAPSHOT_UNDERLYING: ${{ vars.SNAPSHOT_UNDERLYING || 'GGAL' }}
+          SNAPSHOT_RATE: ${{ vars.SNAPSHOT_RATE || '0.35' }}
+        run: pnpm snapshot
