@@ -1,0 +1,4 @@
+interface:
+  display_name: "Opciones Review Heartbeat"
+  short_description: "Fresh-agent PR review monitoring lifecycle"
+  default_prompt: "Use $opciones-review-heartbeat to monitor this PR with a fresh reviewer agent."
