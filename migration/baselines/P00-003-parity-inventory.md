@@ -61,7 +61,7 @@ therefore depends on Supabase RLS. Both committed tables allow public reads.
 | `/aprender/[...slug]` | `generateStaticParams` enumerates every Markdown/MDX lesson. The page renders GFM Markdown, frontmatter title/module/sources, and previous/next navigation across the globally sorted lesson list. Sources are displayed as plain text list items. | An unknown slug calls `notFound()`. `getLesson` accepts the route segments and joins them into filesystem candidates; there is no explicit segment allowlist. No per-lesson metadata title is generated. | **Preserve** content, ordering, links, Markdown/GFM rendering, and 404 behavior. Track slug validation and content-source decisions under **GAP-PRODUCT-02**; do not silently change routes during #13/#74. |
 | `/cadena?monthCode=` | Server Component reads the latest Supabase `chain_snapshots` row for hard-coded `GGAL`, validates it with `ChainSnapshotSchema`, and renders one row per distinct strike with call/put bid, ask, last, volume, last-price IV, ITM shading, and nearest-strike ATM marking (a distance tie keeps the lower sorted strike). It declares `revalidate = 60`. It has no source, delay, or quality-warning fields to render. | Any query error and no row both render “Sin snapshots”. Schema errors are unhandled. Month codes are sorted by fixed bimonthly month number, deduplicated by month number, and default to the last ordinal code (“más lejano”), not the latest expiration date. Unknown query values fall back to that default. Duplicate type/strike contracts overwrite earlier tickers. An empty selected contract set reaches `reduce` without an initial value and throws. Numbers use `es-AR`; quotes use two decimals, spot zero, IV one percent decimal, and missing values `—`; zero volume is blank. Snapshot timestamp displays Buenos Aires time. | **Replace data access** in #21/#22/#25; expose quality/source in #41. Preserve table fields, month query fallback, IV source, DTE basis, colors, timestamp zone, and null/zero display until an issue explicitly changes them. **GAP-PRODUCT-03:** year-aware expiration selection, empty-contract behavior, and duplicate-series policy are unowned ambiguities. |
 | `/simulador` | Reads the latest Supabase snapshot for hard-coded `GGAL`, validates it, and hydrates a client-side multi-leg simulator. Supports six templates, manual option/stock legs, contract/type/side/premium edits, expiration buttons, scenario sliders, expiry and Black-Scholes P&L curves, aggregate Greeks, breakevens, max gain/loss, and a capital affordability estimate. It declares `revalidate = 60`. | Query errors/no row render “Sin snapshots”; schema errors are unhandled. Default expiration is the first month ordinal, unlike `/cadena`. Empty contract lists still permit a synthetic ATM call priced by the model. Changing expiration resets scenario DTE but does not clear or re-resolve existing legs. | **Replace market loading** in #26 and selector behavior in #45/#50; calculation persistence/API belongs to #47; costs/model changes belong to #51/#52. Preserve current results until those versioned cutovers. **GAP-PRODUCT-04:** expiration-change leg semantics and empty-chain behavior need an explicit decision and tests. |
-| `/monitor` | Reads the latest 100 `snapshot_runs`, newest first, and displays current UTC `YYYY-MM`, usage against 25,000, a hard-limit marker at 24,500, status counts, average calls for successful runs, recent run rows, and manual refresh. It declares `revalidate = 60`. | Supabase errors are ignored as an empty list. Usage sums only successful runs in the returned last 100; zero metrics display `—`. Error notes are available only as a title tooltip; aborted notes are not shown. Buenos Aires time is used for rows. UI constants can drift from worker environment configuration. | **Replace** in #27 and add provider quality/coverage in #41. Preserve run status/count fields and explicit empty state. **GAP-OPS-01:** pagination, complete-month accounting, query errors, notes visibility, and shared limit configuration must be decided by #27/#41. |
+| `/monitor` | Reads the latest 100 `snapshot_runs`, newest first, and displays current UTC `YYYY-MM`, usage against 25,000, a hard-limit marker at 24,500, status counts, average calls for successful runs, recent run rows, and manual refresh. It declares `revalidate = 60`. | Supabase errors are ignored as an empty list. Usage sums only successful runs in the returned last 100. Recent-run contract/puntas/call fields collapse zero to `—`; monthly summary cards and usage render numeric `0`. Error notes are available only as a title tooltip; aborted notes are not shown. Buenos Aires time is used for rows. UI constants can drift from worker environment configuration. | **Replace** in #27 and add provider quality/coverage in #41. Preserve run status/count fields and explicit empty state. **GAP-OPS-01:** pagination, complete-month accounting, query errors, notes visibility, and shared limit configuration must be decided by #27/#41. |
 | `/backtest` | Static placeholder promising entry/exit/roll rules and P&L, drawdown, and win-rate output. No backtest calculation, API, storage, or input exists. | Always renders “En construcción”; body contains the current typo “corrla”. | **Preserve placeholder** until the bounded job/API and educational UI in #56-#65, especially #64, replace it. The placeholder is a user-visible capability and must not become a broken route mid-cutover. |
 | `POST /api/snapshot` | No request body. Public route spawns `pnpm snapshot` from a monorepo root inferred as two parents above `process.cwd()`, with a 55-second timeout and route `maxDuration = 60`. On success it returns `{ ok: true, lines: string[], summary: string }`, where `summary` is the first line containing `✓ guardado` or the final output line, then revalidates chain/monitor/simulator. | A worker “ABORTADO” exits `0`, so the HTTP response remains `200`/`ok:true`; the client infers aborted state by scanning `lines`. Spawn/worker failure returns status `500` and `{ ok:false, error, lines }`. Raw stdout/stderr and the process error message are returned to the browser. There is no authentication, authorization, CSRF check, concurrency lock, idempotency key, or structured worker result. | **Replace** with protected queued submission in #28 and safe orchestration in #40. Preserve the three refresh targets and a distinct aborted outcome, but do not preserve the public process-spawn mechanism. |
 
@@ -233,16 +233,25 @@ response in the error.
    band, and then takes the first `MAX_COTIZACIONES`; it is not sorted by
    closeness, liquidity, type, or expiry.
 5. An individual quote uses only `puntas[0]`; positive bid/ask/last values are
-   retained, non-positive values become `null`, volume defaults to `0`, and
-   open interest is nullable. There is no sort or best-price validation.
+   retained and non-positive values become `null`. Volume and open interest use
+   any finite numeric provider value, including negative values; absent or
+   non-finite volume defaults to `0`, while absent/non-finite open interest is
+   `null`. There is no sort or best-price validation.
 6. Individual request failure is caught per ticker, logged, and represented by
    a quote whose prices are all `null` and volume is `0`; the rest of the
    snapshot still persists.
-7. Non-selected contracts use discovery `.cotizacion` last/volume/OI, force
-   bid/ask to `null`, and receive the current snapshot timestamp even though the
-   comment identifies this data as stale. Staleness/provenance is not encoded.
+7. Non-selected contracts are looked up again by `.simbolo` only, then use that
+   discovery row's `.cotizacion` last/volume/OI, force bid/ask to `null`, and
+   receive the current snapshot timestamp even though the comment identifies
+   this data as stale. A contract originally accepted through the `symbol` or
+   `ticker` fallback is not found unless the same row also has `.simbolo`; it
+   receives null last/OI and zero volume. Staleness/provenance and this lookup
+   loss are not encoded.
 8. The assembled `ChainSnapshot` is TypeScript-annotated but is not parsed with
-   `ChainSnapshotSchema` before REST persistence.
+   `ChainSnapshotSchema` before REST persistence. In particular, negative
+   volume/OI accepted by the worker violates `OptionQuoteSchema`, can persist in
+   JSONB, and then makes `/cadena` and `/simulador` throw when they parse the
+   stored snapshot.
 
 ### Call guardrail and accounting
 
@@ -295,11 +304,14 @@ at `00,30 13-20 UTC` (10:00 through 17:30 ARG), although its comment says
 10:00-17:00. The workflow has no concurrency key and uses major pnpm/action
 versions plus `pnpm` 9 rather than the repository's exact package-manager pin.
 
-#13/#21/#23/#37 own replacement persistence/import. **GAP-DATA-02:** #23 is
-titled as a SQLite import, but this baseline found current runtime persistence
-in Supabase/PostgREST and no SQLite adapter or database in the tracked tree.
-Before #23, reconcile the issue scope with the actual Supabase tables and the
-reported “one snapshot/one run” source; do not invent SQLite data.
+#13/#21/#23/#25/#27/#29/#37 own parts of replacement persistence or cutover.
+**GAP-DATA-02:** #23, #25, #27, and #29 assume a legacy SQLite/filesystem
+runtime, but this baseline found current chain and monitor reads plus snapshot
+writes in Supabase/PostgREST and no SQLite adapter, configuration, database, or
+artifact workflow in the tracked tree. The removal checks in #27/#29 can pass
+vacuously, while #23/#25 name the wrong source. Before those issues start,
+reconcile all four scopes with the actual Supabase tables and the reported “one
+snapshot/one run” source; do not invent SQLite data.
 
 ### Monitor output
 
@@ -448,7 +460,10 @@ and maximum gain `35,000`.
 The `protective-put` display name adds “(collar simple)” but it has no short call
 and is therefore not a collar by its legs. Record this as **GAP-FIN-01**; do not
 change the ID/name/legs without explicit product ownership. #44/#45 own the
-versioned strategy model and market-aware selectors.
+versioned strategy model and market-aware selectors. **GAP-FIN-03:** this
+inventory and `STRATEGIES` contain exactly six templates, while #45 says “all
+nine current templates.” Reconcile the issue count before implementation; the
+cutover must neither fabricate three templates nor silently omit intended work.
 
 ### Simulator transformations beyond core
 
@@ -534,16 +549,16 @@ validated contracts while preserving response/state semantics through cutover.
 | --- | --- | --- | --- |
 | PAR-01 | Home, layout, navigation, disclaimer | Preserve; add smoke coverage before any shell change. | **Unowned gap:** add to #30 or follow-up (`GAP-PRODUCT-01`). |
 | PAR-02 | 25 learning lessons, index, slugs, order, Markdown/GFM, prev/next | Preserve current filesystem behavior until an explicit content migration proves count/slug/content parity. | #13/#74 are adjacent; ownership gap remains (`GAP-PRODUCT-02`). |
-| PAR-03 | Latest GGAL chain fields, expiration selector, IV/display states | Replace access through typed repository/API/client without financial/UI drift. | #21, #22, #25; quality extension #41. |
-| PAR-04 | Simulator market loading and premium precedence | Replace Supabase loading; preserve calculations and observed quote/model fallback until versioned selectors. | #26, then #45/#50/#51. |
+| PAR-03 | Latest GGAL chain fields, expiration selector, IV/display states | Replace access through typed repository/API/client without financial/UI drift. | #21, #22, #25; quality extension #41; legacy-source scope gap `GAP-DATA-02`. |
+| PAR-04 | Simulator market loading and premium precedence | Replace Supabase loading; preserve calculations and observed quote/model fallback until versioned selectors. | #26, then #45/#50/#51; template-count gap `GAP-FIN-03`. |
 | PAR-05 | Core finance functions, units, signs, edge behavior, exports | Preserve as legacy model/version; add compatibility tests before American/cost changes. | #44/#47/#51/#52; package retirement gap `GAP-TYPES-01`. |
-| PAR-06 | Monitor run list/counts/status/usage | Replace with paginated run API and explicit error/empty states; reconcile legacy accounting. | #27/#41. |
+| PAR-06 | Monitor run list/counts/status/usage | Replace with paginated run API and explicit error/empty states; reconcile legacy accounting. | #27/#41 and legacy-source scope gap `GAP-DATA-02`. |
 | PAR-07 | Manual refresh and snapshot API outcomes | Replace public process spawn with protected queued submission and structured status; retain refresh visibility and aborted outcome. | #28/#40. |
 | PAR-08 | IOL discovery, ticker normalization, partial quotes, source order | Split fetch/normalize, add raw audit and quality reasons; keep fixtures mapping every observed legacy outcome. | #32/#33/#35/#36/#38/#39. |
 | PAR-09 | Snapshot/run persistence and current Supabase data | Import the actual legacy source once, then persist atomically/idempotently; do not assume SQLite. | #13/#21/#23/#37 and `GAP-DATA-02`. |
 | PAR-10 | Zod/DataProvider/static provider/public data exports | Preserve fields/defaults/nulls until versioned DTO/provider decision; seed samples through replacement path. | #18/#21/#22/#24/#32 and `GAP-DATA-01`. |
 | PAR-11 | Backtest placeholder route | Keep route functional until job API and educational interface replace it. | #56-#65, especially #64. |
-| PAR-12 | Supabase public-read access during transition | Preserve required reads only until generated API cutover; removal/credential changes need a staged access plan. | #11/#22/#25-#29. |
+| PAR-12 | Supabase public-read access during transition | Preserve required reads only until generated API cutover; removal/credential changes need a staged access plan. | #11/#22/#25-#29 and `GAP-DATA-02`. |
 
 ## Gaps that require explicit decisions
 
@@ -558,12 +573,15 @@ validated contracts while preserving response/state semantics through cutover.
    exact-zero/tangent roots and invalid numeric inputs lack tests.
 5. **Operational safety:** fail-open call guardrail, undercounted failures/dry
    runs, unprotected concurrent refresh, raw log/error exposure (#28/#39/#40).
-6. **Persistence source:** planned SQLite importer versus observed Supabase REST
-   tables and no tracked SQLite integration (`GAP-DATA-02`).
+6. **Persistence source:** #23/#25/#27/#29 assume SQLite/filesystem behavior
+   versus observed Supabase REST tables and no tracked SQLite integration
+   (`GAP-DATA-02`).
 7. **Public compatibility:** no owner currently states when source-level core/
    data exports can break or retire (`GAP-TYPES-01`).
 8. **Learning and shell parity:** no current migration task expressly owns the
    existing lesson corpus, home, navigation, or disclaimer.
+9. **Strategy count:** #45 claims nine current templates while the public array
+   and this inventory contain six (`GAP-FIN-03`).
 
 ## Current test evidence and coverage gaps
 
