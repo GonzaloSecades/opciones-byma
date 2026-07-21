@@ -12,6 +12,20 @@ Closes #
 - [ ] `pnpm build`
 - [ ] CI `Quality gate` passes
 
+### Exact commands and results
+
+Paste the commands exactly as run and their relevant output or result. Include links for remote checks.
+
+```text
+$ pnpm test
+<result>
+
+$ pnpm build
+<result>
+
+Quality gate: <run URL and result>
+```
+
 ## Review routing
 
 - [ ] This PR is ready for review (never a draft).
