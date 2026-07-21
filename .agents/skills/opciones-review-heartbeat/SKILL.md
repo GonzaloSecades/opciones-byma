@@ -9,10 +9,20 @@ description: Monitor and address review feedback for an opciones-byma pull reque
 
 1. Refuse to run inside the implementing agent. Spawn one new reviewer agent dedicated to exactly one PR.
 2. Record the PR number, repository, head SHA, and reviewer-agent identifier.
-3. Use the installed `github-review-heartbeat` skill for bounded monitoring.
+3. Use the installed `github-review-heartbeat` skill for bounded monitoring when it is available. Otherwise use the repository-safe fallback below; never block the immediate review on a missing global skill.
 4. Default to `READ_ONLY`. Use `FIX_AND_PUSH` only after explicit user authorization.
 
 Never reuse a reviewer agent or its context for a different PR.
+
+## Repository-safe fallback
+
+When `github-review-heartbeat` is not installed:
+
+1. Confirm `gh auth status`, resolve the PR, and capture its current head SHA.
+2. Read PR metadata, checks, reviews, and top-level comments with `gh pr view`.
+3. Read `reviewThreads` with `gh api graphql`, including thread IDs, `isResolved`, `isOutdated`, file and line anchors, and every comment. Follow GraphQL cursors until `hasNextPage` is false.
+4. Apply the Review and Refresh rules below in `READ_ONLY` mode.
+5. Use native Codex automation management for a finite recurring monitor when available. If scheduling is unavailable, report that recurring monitoring is unconfirmed and do not emulate it with loops, background processes, or edited automation files.
 
 ## Review
 
