@@ -68,8 +68,29 @@ Build traces collected
 The route summary included the static learning pages, dynamic snapshot API,
 chain, monitor, and simulator routes. Middleware compiled successfully.
 
-Classification: clean baseline. No build failures, deprecation notices, lint
-warnings, type errors, or new worktree changes were produced.
+Classification: successful baseline with pre-existing, environment-sensitive
+warnings. There were no build failures, deprecation notices, lint warnings,
+type errors, or new tracked worktree changes.
+
+The warm local Windows build above emitted no warnings. The cold Linux build in
+GitHub Actions run
+[`29861757233`](https://github.com/GonzaloSecades/opciones-byma/actions/runs/29861757233),
+job `88739959540`, ran against the same PR head and exited successfully after
+emitting:
+
+- Next.js reported that no build cache was found. This is expected for the
+  current cold CI job, which does not restore a Next.js build cache.
+- Webpack emitted two `PackFileCacheStrategy` notices about serializing large
+  strings (`102 KiB` and `244 KiB`). These are cache-performance warnings and
+  did not affect compilation output.
+- Next.js reported `Compiled with warnings` because
+  `@supabase/supabase-js/dist/index.mjs` reads the Node.js API
+  `process.version`, which is unsupported in the Edge Runtime. The import trace
+  reaches the existing Supabase middleware through `@supabase/ssr`.
+
+The PR changes documentation only, so these CI warnings predate P00-004. Their
+absence from the warm local build demonstrates that warning capture must cover
+both local and clean-CI environments.
 
 ## Failure classification rule
 
