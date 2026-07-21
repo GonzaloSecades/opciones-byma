@@ -74,8 +74,8 @@ type errors, or new tracked worktree changes.
 
 The warm local Windows build above emitted no warnings. The cold Linux build in
 GitHub Actions run
-[`29861757233`](https://github.com/GonzaloSecades/opciones-byma/actions/runs/29861757233),
-job `88739959540`, ran against the same PR head and exited successfully after
+[`29862152296`](https://github.com/GonzaloSecades/opciones-byma/actions/runs/29862152296),
+job `88741291332`, ran against the same PR head and exited successfully after
 emitting:
 
 - Next.js reported that no build cache was found. This is expected for the
