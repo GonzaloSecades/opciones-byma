@@ -75,8 +75,9 @@ type errors, or new tracked worktree changes.
 The warm local Windows build above emitted no warnings. The cold Linux build in
 GitHub Actions run
 [`29862152296`](https://github.com/GonzaloSecades/opciones-byma/actions/runs/29862152296),
-job `88741291332`, ran against the same PR head and exited successfully after
-emitting:
+job `88741291332`, ran against warning-capture commit `1fb8ad0` and exited
+successfully after emitting the warnings below. Later P00-004 commits only
+correct this evidence citation and do not change application or build code.
 
 - Next.js reported that no build cache was found. This is expected for the
   current cold CI job, which does not restore a Next.js build cache.
