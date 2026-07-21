@@ -82,12 +82,16 @@ Resolve-Path (Join-Path $repoRoot 'packages/data')
 
 ## Environment variable names
 
-List names without values:
+List the union of names declared in `.env.example` and names referenced by the
+current TypeScript runtime, without reading or printing values:
 
 ```powershell
-Get-Content .env.example |
+$declared = Get-Content .env.example |
   Where-Object { $_ -match '^[A-Za-z_][A-Za-z0-9_]*=' } |
   ForEach-Object { ($_ -split '=', 2)[0] }
+$referenced = rg -o --no-filename --glob '*.ts' 'process\.env\.[A-Z0-9_]+' apps scripts packages |
+  ForEach-Object { $_ -replace '^process\.env\.', '' }
+@($declared) + @($referenced) | Sort-Object -Unique
 ```
 
 Recorded names:
@@ -100,11 +104,21 @@ SUPABASE_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY
 SNAPSHOT_UNDERLYING
 SNAPSHOT_RATE
+SNAPSHOT_NEAR_MONEY_PCT
+SNAPSHOT_MAX_COTIZACIONES
+CALL_HARD_LIMIT
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 ```
 
 `IOL_PASSWORD` and `SUPABASE_SERVICE_ROLE_KEY` are secrets. `IOL_USERNAME` is sensitive account data. Variables prefixed with `NEXT_PUBLIC_` and Supabase anonymous keys are client-visible by design and must never be treated as privileged credentials. This baseline records names only; do not print local values in diagnostics, CI logs, issues, or pull requests.
+
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` is declared by `.env.example` but is not read by
+the current application. The web runtime reads
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Both names remain in this baseline so
+the example/runtime drift is explicit and can be reconciled by later migration
+work without losing evidence of the starting state.
 
 ## Reproduction checklist
 
