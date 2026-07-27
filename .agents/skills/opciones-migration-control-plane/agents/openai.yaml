@@ -1,0 +1,3 @@
+interface:
+  display_name: "Opciones Migration Control Plane"
+  short_description: "Apply the opciones-byma migration manifest, gates, parity, and decision workflow"
