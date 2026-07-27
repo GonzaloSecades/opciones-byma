@@ -8,6 +8,8 @@
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
+    "migration:validate": "node scripts/validate-migration-control-plane.mjs",
+    "migration:validate:test": "node --test scripts/validate-migration-control-plane.test.mjs",
     "snapshot": "tsx scripts/snapshot.ts",
     "snapshot:dry": "tsx scripts/snapshot.ts --dry-run"
   },
