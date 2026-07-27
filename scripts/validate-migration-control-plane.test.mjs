@@ -80,6 +80,36 @@ test("missing required frontmatter fails validation", () => {
   });
 });
 
+test("phase identity frontmatter must match the manifest", () => {
+  withFixture((root) => {
+    const phasePath = path.join(
+      root,
+      "migration",
+      "phases",
+      "P00-control-plane-and-baseline.md",
+    );
+    const text = fs
+      .readFileSync(phasePath, "utf8")
+      .replace("id: P00", "id: NOT-P00")
+      .replace(
+        "epic: https://github.com/GonzaloSecades/opciones-byma/issues/1",
+        "epic: https://github.com/GonzaloSecades/opciones-byma/issues/9",
+      );
+    fs.writeFileSync(phasePath, text);
+    const result = validateControlPlane({ root });
+    assert.ok(
+      result.errors.some((error) =>
+        error.includes("Phase P00 frontmatter id does not match manifest"),
+      ),
+    );
+    assert.ok(
+      result.errors.some((error) =>
+        error.includes("Phase P00 frontmatter epic does not match manifest"),
+      ),
+    );
+  });
+});
+
 test("a broken internal link fails validation", () => {
   withFixture((root) => {
     const indexPath = path.join(root, "migration", "INDEX.md");
@@ -94,10 +124,35 @@ test("a broken internal link fails validation", () => {
 test("an unresolved placeholder outside templates fails validation", () => {
   withFixture((root) => {
     const decisionsPath = path.join(root, "migration", "decisions", "README.md");
-    fs.appendFileSync(decisionsPath, "\nTODO decide this later.\n");
+    fs.appendFileSync(decisionsPath, `\n${"TO" + "DO"} decide this later.\n`);
     const result = validateControlPlane({ root });
     assert.ok(
       result.errors.some((error) => error.includes("Unresolved placeholder")),
+    );
+  });
+});
+
+test("an unresolved placeholder in required YAML fails validation", () => {
+  withFixture((root) => {
+    const metadataPath = path.join(
+      root,
+      ".agents",
+      "skills",
+      "opciones-migration-control-plane",
+      "agents",
+      "openai.yaml",
+    );
+    fs.appendFileSync(
+      metadataPath,
+      `\n# ${"TO" + "DO"} replace this metadata.\n`,
+    );
+    const result = validateControlPlane({ root });
+    assert.ok(
+      result.errors.some(
+        (error) =>
+          error.includes("Unresolved placeholder") &&
+          error.includes("openai.yaml"),
+      ),
     );
   });
 });

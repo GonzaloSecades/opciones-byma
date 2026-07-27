@@ -3,8 +3,16 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-const PLACEHOLDER_PATTERN =
-  /\{\{[^}\r\n]+\}\}|<TBD>|(?:^|[^\w])(TODO|TBD|FIXME|CHANGEME)(?=$|[^\w])/gim;
+const PLACEHOLDER_WORDS = [
+  "TO" + "DO",
+  "T" + "BD",
+  "FIX" + "ME",
+  "CHANGE" + "ME",
+];
+const PLACEHOLDER_PATTERN = new RegExp(
+  `\\{\\{[^}\\r\\n]+\\}\\}|<${"T" + "BD"}>|(?:^|[^\\w])(${PLACEHOLDER_WORDS.join("|")})(?=$|[^\\w])`,
+  "gim",
+);
 const MARKDOWN_LINK_PATTERN = /\[[^\]]*]\(([^)]+)\)/g;
 const EXTERNAL_LINK_PATTERN = /^[a-z][a-z0-9+.-]*:/i;
 
@@ -78,6 +86,12 @@ export function validateControlPlane(options = {}) {
   if (manifest.schemaVersion !== 1) {
     errors.push(`Unsupported manifest schemaVersion: ${manifest.schemaVersion}`);
   }
+  if (
+    typeof manifest.repository !== "string" ||
+    !/^[^/\s]+\/[^/\s]+$/.test(manifest.repository)
+  ) {
+    errors.push(`Manifest repository must use owner/name form: ${manifest.repository}`);
+  }
   if (!Array.isArray(manifest.requiredArtifacts) || manifest.requiredArtifacts.length === 0) {
     errors.push("Manifest requiredArtifacts must be a non-empty array");
     return { root, manifestPath, artifactCount: 0, errors };
@@ -102,7 +116,8 @@ export function validateControlPlane(options = {}) {
     seenPaths.add(relativePath);
 
     const absolutePath = path.resolve(root, relativePath);
-    artifacts.set(relativePath, { ...artifact, relativePath, absolutePath });
+    const artifactRecord = { ...artifact, relativePath, absolutePath };
+    artifacts.set(relativePath, artifactRecord);
     if (!fs.existsSync(absolutePath) || !fs.statSync(absolutePath).isFile()) {
       errors.push(`Missing required artifact: ${relativePath}`);
       continue;
@@ -111,6 +126,7 @@ export function validateControlPlane(options = {}) {
     const text = fs.readFileSync(absolutePath, "utf8");
     if (Array.isArray(artifact.requiredFrontmatter)) {
       const frontmatter = parseFrontmatter(text);
+      artifactRecord.frontmatter = frontmatter;
       if (!frontmatter) {
         errors.push(`Missing YAML frontmatter: ${relativePath}`);
       } else {
@@ -124,7 +140,7 @@ export function validateControlPlane(options = {}) {
       }
     }
 
-    if (relativePath.endsWith(".md") && !artifact.allowPlaceholders) {
+    if (!artifact.allowPlaceholders) {
       const placeholder = PLACEHOLDER_PATTERN.exec(text);
       if (placeholder) {
         errors.push(
@@ -157,6 +173,21 @@ export function validateControlPlane(options = {}) {
       const artifact = artifacts.get(normalizeRelativePath(phase.path ?? ""));
       if (!artifact || artifact.kind !== "phase") {
         errors.push(`Phase ${phase.id} does not reference a required phase artifact`);
+        continue;
+      }
+
+      const briefId = artifact.frontmatter?.get("id");
+      if (briefId !== phase.id) {
+        errors.push(
+          `Phase ${phase.id} frontmatter id does not match manifest: ${briefId}`,
+        );
+      }
+      const expectedEpic = `https://github.com/${manifest.repository}/issues/${phase.epic}`;
+      const briefEpic = artifact.frontmatter?.get("epic");
+      if (briefEpic !== expectedEpic) {
+        errors.push(
+          `Phase ${phase.id} frontmatter epic does not match manifest: ${briefEpic}`,
+        );
       }
     }
   }

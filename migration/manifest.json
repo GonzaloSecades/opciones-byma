@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "controlPlaneVersion": "1.0.0",
+  "repository": "GonzaloSecades/opciones-byma",
   "index": "migration/INDEX.md",
   "requiredArtifacts": [
     {
