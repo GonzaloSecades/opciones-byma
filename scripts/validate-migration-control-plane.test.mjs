@@ -156,3 +156,58 @@ test("an unresolved placeholder in required YAML fails validation", () => {
     );
   });
 });
+
+test("non-template artifacts cannot disable placeholder or link validation", () => {
+  withFixture((root) => {
+    const manifestPath = path.join(root, "migration", "manifest.json");
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    const decisionsArtifact = manifest.requiredArtifacts.find(
+      (artifact) => artifact.path === "migration/decisions/README.md",
+    );
+    decisionsArtifact.allowPlaceholders = true;
+    const indexArtifact = manifest.requiredArtifacts.find(
+      (artifact) => artifact.path === "migration/INDEX.md",
+    );
+    indexArtifact.validateLinks = false;
+    fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+    fs.appendFileSync(
+      path.join(root, "migration", "decisions", "README.md"),
+      `\n${"TO" + "DO"} decide this later.\n`,
+    );
+    fs.appendFileSync(
+      path.join(root, "migration", "INDEX.md"),
+      "\n[Broken](missing-artifact.md)\n",
+    );
+
+    const result = validateControlPlane({ root });
+    assert.ok(
+      result.errors.some((error) =>
+        error.includes(
+          "Only template artifacts may allow placeholders: migration/decisions/README.md",
+        ),
+      ),
+    );
+    assert.ok(
+      result.errors.some(
+        (error) =>
+          error.includes("Unresolved placeholder") &&
+          error.includes("migration/decisions/README.md"),
+      ),
+    );
+    assert.ok(
+      result.errors.some((error) =>
+        error.includes(
+          "Only template artifacts may disable link validation: migration/INDEX.md",
+        ),
+      ),
+    );
+    assert.ok(
+      result.errors.some(
+        (error) =>
+          error.includes("Broken internal link") &&
+          error.includes("migration/INDEX.md"),
+      ),
+    );
+  });
+});

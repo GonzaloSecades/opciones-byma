@@ -115,6 +115,18 @@ export function validateControlPlane(options = {}) {
     }
     seenPaths.add(relativePath);
 
+    const isTemplate = artifact.kind === "template";
+    if (artifact.allowPlaceholders === true && !isTemplate) {
+      errors.push(
+        `Only template artifacts may allow placeholders: ${relativePath}`,
+      );
+    }
+    if (artifact.validateLinks === false && !isTemplate) {
+      errors.push(
+        `Only template artifacts may disable link validation: ${relativePath}`,
+      );
+    }
+
     const absolutePath = path.resolve(root, relativePath);
     const artifactRecord = { ...artifact, relativePath, absolutePath };
     artifacts.set(relativePath, artifactRecord);
@@ -140,7 +152,9 @@ export function validateControlPlane(options = {}) {
       }
     }
 
-    if (!artifact.allowPlaceholders) {
+    const placeholdersAllowed =
+      isTemplate && artifact.allowPlaceholders === true;
+    if (!placeholdersAllowed) {
       const placeholder = PLACEHOLDER_PATTERN.exec(text);
       if (placeholder) {
         errors.push(
@@ -150,7 +164,9 @@ export function validateControlPlane(options = {}) {
       PLACEHOLDER_PATTERN.lastIndex = 0;
     }
 
-    if (relativePath.endsWith(".md") && artifact.validateLinks !== false) {
+    const linkValidationDisabled =
+      isTemplate && artifact.validateLinks === false;
+    if (relativePath.endsWith(".md") && !linkValidationDisabled) {
       for (const target of markdownTargets(text, absolutePath)) {
         if (!fs.existsSync(target)) {
           errors.push(
