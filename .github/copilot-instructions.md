@@ -19,8 +19,17 @@ Apply BYMA domain conventions consistently:
 - Positive `lots` and `shares` are long; negative values are written or short.
 - Use Argentine terminology in user-facing text: `base`, `prima`, `lote`, `papel`, and `lanzar`.
 - Do not treat an option prefix as the underlying equity ticker; preserve the canonical mapping in `packages/data`.
-- Treat options as American-style and preserve rate sensitivity in valuation logic.
+- Preserve the current legacy calculation contract unless the linked issue
+  explicitly owns a versioned replacement: Black-Scholes is European,
+  no-dividend, rate-sensitive, and receives annual decimal rates and time in
+  years. American exercise, dividends, and trading costs remain target-model
+  decisions and must not be introduced implicitly.
 
 Check every new push from the current head SHA. Re-evaluate earlier comments against the latest code and avoid repeating findings that are already fixed. All valid Copilot and heartbeat findings must be addressed or explicitly rebutted with evidence, and every conversation must be resolved before merge. CI passing is necessary but is not evidence of correctness by itself.
+
+Check workflow metadata as a repository contract: exactly one implementing
+label must be paired with its opposite-agent reviewer label
+(`agent:codex` + `review:claude` or `agent:claude` + `review:codex`). Copilot is
+an additional review and never substitutes for that cross-agent handoff.
 
 Use the matching files in `.github/instructions/` for technology-specific review criteria. Use relevant repository agent skills when specialized context is needed.

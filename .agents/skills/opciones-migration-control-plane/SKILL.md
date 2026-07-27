@@ -16,10 +16,15 @@ Use this skill for every issue labeled `migration`.
    `migration/baselines/P00-003-parity-inventory.md`.
 5. Read every applicable open entry in `migration/decisions/README.md`.
 6. Read the active GitHub issue and its dependencies.
+7. Confirm exactly one implementing-agent label and its opposite-agent review
+   route: `agent:codex` + `review:claude`, or
+   `agent:claude` + `review:codex`.
 
 ## Implement
 
-- Work from one issue and exactly one implementing-agent label.
+- Work from one issue, exactly one implementing-agent label, and exactly one
+  opposite-agent reviewer label. Keep both labels synchronized between the
+  issue and pull request.
 - Preserve observed behavior until the issue explicitly owns replacement or
   cutover.
 - Record ambiguity in the decision register instead of inventing a convention.
@@ -27,6 +32,20 @@ Use this skill for every issue labeled `migration`.
 - Update the phase brief when scope, dependencies, or exit evidence changes.
 - Keep CI enforcement work separate from the validator and knowledge-base
   source unless the active issue explicitly owns both.
+
+## Handoff
+
+- Open a ready pull request only after the user authorizes publishing.
+- Hand the current head to a fresh, context-isolated reviewer from the opposite
+  agent family. Same-family self-review does not satisfy this requirement.
+- Record the implementing label, reviewer label, inspected head SHA, exact
+  validation evidence, and every finding disposition on the pull request.
+- The implementer owns bounded remediation commits. The opposite reviewer must
+  re-check the resulting current head.
+- If the required reviewer is unavailable, leave the pull request unmerged and
+  report the blocker.
+- After all gates pass and the user authorizes merge, use a regular merge commit
+  and retain the remote feature branch.
 
 ## Validate
 
@@ -41,5 +60,5 @@ git diff --check
 ```
 
 Record exact commands and outcomes in the pull request. After the PR opens, use
-the repository review-heartbeat skill with a fresh read-only reviewer and
-require the Quality gate to pass.
+the repository review-heartbeat skill with a fresh read-only opposite-agent
+reviewer and require the Quality gate to pass.
