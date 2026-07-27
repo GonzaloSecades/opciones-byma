@@ -57,6 +57,7 @@ dependency.
 - [Issue brief template](templates/ISSUE_BRIEF.md)
 - [Decision template](templates/DECISION.md)
 - [Migration control-plane skill](../.agents/skills/opciones-migration-control-plane/SKILL.md)
+- [Cross-agent review-heartbeat skill](../.agents/skills/opciones-review-heartbeat/SKILL.md)
 
 The validator implementation is split into a
 [cross-platform Node entrypoint](../scripts/validate-migration-control-plane.mjs),
@@ -65,8 +66,10 @@ and [deterministic validator tests](../scripts/validate-migration-control-plane.
 
 ## Change rules
 
-1. Work from one active implementation issue and exactly one implementing-agent
-   label.
+1. Work from one active implementation issue, exactly one implementing-agent
+   label, and its opposite-agent reviewer label:
+   `agent:codex` + `review:claude`, or
+   `agent:claude` + `review:codex`.
 2. Read the active phase brief, quality gates, parity inventory, and applicable
    open decisions before changing behavior.
 3. Preserve current behavior until a ticket explicitly owns its replacement or
@@ -77,3 +80,5 @@ and [deterministic validator tests](../scripts/validate-migration-control-plane.
    same PR when an artifact or gate changes.
 6. Do not advance or close a phase epic until every phase exit condition has
    evidence.
+7. Record the cross-agent handoff against the inspected head SHA. Merge with a
+   regular merge commit and retain the remote feature branch.
